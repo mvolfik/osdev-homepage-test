@@ -63,7 +63,7 @@ jobs:
     name: "Deploy Generated Site"
     runs-on: ubuntu-latest
     needs: [build_site, check_spelling]
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'schedule') && github.repository == 'rust-osdev/homepage'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'schedule')
     permissions:
       contents: write
       issues: write
@@ -107,7 +107,7 @@ jobs:
             new_page=$(git show HEAD --summary | grep -P 'create mode \d+ this-month/\d{4}-\d{2}/index.html' | cut -d' ' -f5)
             echo "Detected a new monthly page:" $new_page
             curl -s -X POST \
-              https://api.github.com/repos/rust-osdev/homepage/issues/212/comments \
+              https://api.github.com/repos/mvolfik/osdev-homepage-test/issues/1/comments \
               -d "{\"body\":\"New issue published: [**$new_page**](https://rust-osdev.com/$new_page). Beep boop.\"}" \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}"
           fi
